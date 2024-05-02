@@ -1,0 +1,43 @@
+from PIL import Image
+
+def resize_image(image_path, max_width, max_height):
+    try:
+       
+        image = Image.open(image_path)
+        
+        
+        original_width, original_height = image.size
+
+       
+        aspect_ratio = original_width / original_height
+
+       
+        new_width = min(original_width, max_width)
+        new_height = min(original_height, max_height)
+        if original_width > max_width:
+            new_height = int(new_width / aspect_ratio)
+        if original_height > max_height:
+            new_width = int(new_height * aspect_ratio)
+
+        
+        resized_image = image.resize((new_width, new_height), Image.ANTIALIAS)
+        
+        return resized_image
+    except Exception as e:
+        print("Error resizing image:", e)
+        return None
+
+
+def main():
+    
+    image_path = "input_image.jpg"
+    
+   
+    max_width = 800
+    max_height = 600
+
+    resized_image = resize_image(image_path, max_width, max_height)
+    if resized_image:
+        resized_image.show()  
+if __name__ == "__main__":
+    main()
