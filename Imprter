@@ -1,0 +1,30 @@
+import requests
+
+def fetch_health_data(api_key):
+    url = "https://example-health-app.com/api/data"
+    headers = {"Authorization": f"Bearer {api_key}"}
+    
+    try:
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print("Failed to fetch data:", response.text)
+            return None
+    except Exception as e:
+        print("Error fetching data:", e)
+        return None
+
+def main():
+    
+    api_key = 'your_api_key'
+    
+    health_data = fetch_health_data(api_key)
+    if health_data:
+        print("Fetched health data successfully:", health_data)
+        
+    else:
+        print("Failed to fetch health data.")
+
+if __name__ == "__main__":
+    main()
