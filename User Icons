@@ -1,17 +1,25 @@
 from PIL import Image
 
 def resize_image(image_path, max_width, max_height):
+    """
+    Ændrer størrelsen på et billede og returnerer det ændrede billede.
+
+    :param image_path: Stien til det oprindelige billede, der skal ændres størrelsen på.
+    :param max_width: Den maksimale bredde, som det ændrede billede må have.
+    :param max_height: Den maksimale højde, som det ændrede billede må have.
+    :return: Det ændrede billede som en PIL Image-objekt, hvis det lykkes at ændre størrelsen, ellers returneres None.
+    """
     try:
-       
+        # Åbner det oprindelige billede
         image = Image.open(image_path)
         
-        
+        # Henter størrelsen på det oprindelige billede
         original_width, original_height = image.size
 
-       
+        # Beregner billedets aspektforhold
         aspect_ratio = original_width / original_height
 
-       
+        # Beregner de nye dimensioner baseret på maksimal bredde og højde
         new_width = min(original_width, max_width)
         new_height = min(original_height, max_height)
         if original_width > max_width:
@@ -19,25 +27,29 @@ def resize_image(image_path, max_width, max_height):
         if original_height > max_height:
             new_width = int(new_height * aspect_ratio)
 
-        
+        # Ændrer størrelsen på billedet
         resized_image = image.resize((new_width, new_height), Image.ANTIALIAS)
         
         return resized_image
     except Exception as e:
-        print("Error resizing image:", e)
+        print("Fejl ved ændring af billedstørrelse:", e)
         return None
 
 
 def main():
+    """
+    Eksempel på brug af resize_image-funktionen til at ændre størrelsen på et billede og vise det.
+    """
+    image_path = "input_image.jpg"  # Stien til det oprindelige billede
     
-    image_path = "input_image.jpg"
-    
-   
-    max_width = 800
-    max_height = 600
+    max_width = 800  # Den maksimale bredde, som det ændrede billede må have
+    max_height = 600  # Den maksimale højde, som det ændrede billede må have
 
+    # Ændrer størrelsen på billedet
     resized_image = resize_image(image_path, max_width, max_height)
     if resized_image:
-        resized_image.show()  
+        # Viser det ændrede billede
+        resized_image.show()
+
 if __name__ == "__main__":
     main()
