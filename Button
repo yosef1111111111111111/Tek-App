@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index Page</title>
+    <!-- Definerer dokumenttypen og sprog for HTML-filen -->
+    <meta charset="UTF-8"> <!-- Sætter tegnkodningen til UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Angiver visningsindstillinger for enheder -->
+    <title>Index Page</title> <!-- Titlen på HTML-siden, der vises i browserens fane -->
 </head>
 <body>
-    <h1>Welcome to the Index Page!</h1>
-    <form action="{{ url_for('next_page') }}" method="get">
-        <button type="submit">Go to Next Page</button>
+    <h1>Welcome to the Index Page!</h1> <!-- Overskrift på siden -->
+    <form action="{{ url_for('next_page') }}" method="get"> <!-- Formular til at sende brugeren til næste side -->
+        <button type="submit">Go to Next Page</button> <!-- Knappen, der udløser formularhandling for at navigere til næste side -->
     </form>
 </body>
 </html>
