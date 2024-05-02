@@ -1,0 +1,58 @@
+import requests
+
+class HealthDataConnector:
+    def __init__(self, api_key):
+        self.api_key = api_key
+        self.health_api_url = "https://example-health-app.com/api/data"
+
+    def fetch_health_data(self, user_id):
+        headers = {"Authorization": f"Bearer {self.api_key}"}
+        params = {"user_id": user_id}
+
+        try:
+            response = requests.get(self.health_api_url, headers=headers, params=params)
+            if response.status_code == 200:
+                return response.json()
+            else:
+                print("Failed to fetch health data:", response.text)
+                return None
+        except Exception as e:
+            print("Error fetching health data:", e)
+            return None
+
+class YourApp:
+    def __init__(self):
+        self.health_connector = HealthDataConnector(api_key='your_api_key')
+
+    def get_user_data(self, user_id):
+      
+        user_data = self.fetch_user_data_from_db(user_id)
+        if user_data:
+            health_data = self.health_connector.fetch_health_data(user_id)
+            if health_data:
+                
+                user_data['health_data'] = health_data
+            return user_data
+        else:
+            return None
+
+    def fetch_user_data_from_db(self, user_id):
+        
+        users = {
+            'user1': {'name': 'Alice', 'age': 30},
+            'user2': {'name': 'Bob', 'age': 25},
+            
+        }
+        return users.get(user_id)
+
+def main():
+    app = YourApp()
+    user_id = 'user1'  
+    user_data = app.get_user_data(user_id)
+    if user_data:
+        print("User data with health data:", user_data)
+    else:
+        print("User not found or failed to fetch data.")
+
+if __name__ == "__main__":
+    main()
