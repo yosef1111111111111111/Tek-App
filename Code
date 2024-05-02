@@ -1,24 +1,82 @@
-from flask import Flask, redirect, url_for, render_template
+import sqlite3
 
-# Opretter en Flask-app
-app = Flask(__name__)
+class UserDatabase:
+    def __init__(self, db_name):
+        """
+        Initialiserer en forbindelse til den eksisterende database eller opretter en ny, hvis den ikke findes.
+        
+        :param db_name: Navnet på databasen.
+        """
+        self.conn = sqlite3.connect(db_name)
+        self.cursor = self.conn.cursor()
+        self.create_table()
 
-# Definerer ruter og tilhørende funktioner
+    def create_table(self):
+        """
+        Opretter en tabel 'users' i databasen, hvis den ikke allerede findes.
+        Tabelkolonner: id (INTEGER, primær nøgle), name (TEXT), age (INTEGER), email (TEXT).
+        """
+        self.cursor.execute('''
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY,
+                name TEXT,
+                age INTEGER,
+                email TEXT
+            )
+        ''')
+        self.conn.commit()
 
-@app.route('/')
-def index():
+    def insert_user(self, name, age, email):
+        """
+        Indsætter en ny bruger i databasen med de angivne oplysninger.
+        
+        :param name: Brugerens navn.
+        :param age: Brugerens alder.
+        :param email: Brugerens e-mail.
+        """
+        self.cursor.execute('''
+            INSERT INTO users (name, age, email)
+            VALUES (?, ?, ?)
+        ''', (name, age, email))
+        self.conn.commit()
+
+    def fetch_user_by_id(self, user_id):
+        """
+        Henter brugeroplysninger baseret på brugerens ID.
+        
+        :param user_id: ID'et for den bruger, der skal hentes.
+        :return: Brugeroplysninger som en tuple (id, name, age, email).
+        """
+        self.cursor.execute('''
+            SELECT * FROM users WHERE id=?
+        ''', (user_id,))
+        return self.cursor.fetchone()
+
+    def close_connection(self):
+        """ Lukker forbindelsen til databasen. """
+        self.conn.close()
+
+
+def main():
     """
-    Viser indexsiden ved at rendere 'index.html' skabelonen.
+    Eksempel på brug af UserDatabase-klassen til at oprette, indsætte og hente brugeroplysninger fra databasen.
     """
-    return render_template('index.html')
+    db = UserDatabase('user_data.db')
 
-@app.route('/next_page')
-def next_page():
-    """
-    Viser næste side ved at rendere 'next_page.html' skabelonen.
-    """
-    return render_template('next_page.html')
+    # Indsætter brugere i databasen
+    db.insert_user('Alice', 30, 'alice@example.com')
+    db.insert_user('Bob', 25, 'bob@example.com')
 
-# Kører Flask-appen, hvis denne fil køres som hovedprogram
-if __name__ == '__main__':
-    app.run(debug=True)
+    # Henter brugeroplysninger fra databasen
+    user1 = db.fetch_user_by_id(1)
+    user2 = db.fetch_user_by_id(2)
+
+    # Udskriver brugeroplysninger
+    print("User 1:", user1)
+    print("User 2:", user2)
+
+    # Lukker forbindelsen til databasen
+    db.close_connection()
+
+if __name__ == "__main__":
+    main()
