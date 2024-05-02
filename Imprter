@@ -1,6 +1,12 @@
 import requests
 
 def fetch_health_data(api_key):
+    """
+    Henter sundhedsdata fra en API ved hjælp af en API-nøgle.
+
+    :param api_key: API-nøglen til at godkende adgang til API'en.
+    :return: Sundhedsdata som JSON-format, hvis det lykkes at hente, ellers returneres None.
+    """
     url = "https://example-health-app.com/api/data"
     headers = {"Authorization": f"Bearer {api_key}"}
     
@@ -9,22 +15,24 @@ def fetch_health_data(api_key):
         if response.status_code == 200:
             return response.json()
         else:
-            print("Failed to fetch data:", response.text)
+            print("Fejl ved hentning af data:", response.text)
             return None
     except Exception as e:
-        print("Error fetching data:", e)
+        print("Fejl ved hentning af data:", e)
         return None
 
 def main():
-    
-    api_key = 'your_api_key'
+    """
+    Eksempel på brug af fetch_health_data-funktionen til at hente sundhedsdata fra API'en.
+    """
+    api_key = 'ojdwpajdihapwhdadoshwaohdihawd'  
     
     health_data = fetch_health_data(api_key)
     if health_data:
-        print("Fetched health data successfully:", health_data)
-        
+        print("Sundhedsdata blev hentet succesfuldt:", health_data)
     else:
-        print("Failed to fetch health data.")
+        print("Fejl ved hentning af sundhedsdata.")
 
 if __name__ == "__main__":
     main()
+
