@@ -1,23 +1,31 @@
 import requests
 
 def save_icon(url, filename):
+    """
+    Downloader et ikon fra en URL og gemmer det lokalt som en fil.
+
+    :param url: URL'en for ikonet, der skal downloades.
+    :param filename: Navnet på den fil, hvor ikonet skal gemmes lokalt.
+    """
     try:
         response = requests.get(url)
         if response.status_code == 200:
             with open(filename, 'wb') as f:
                 f.write(response.content)
-            print(f"Icon saved successfully as {filename}")
+            print(f"Ikon blev gemt succesfuldt som {filename}")
         else:
-            print(f"Failed to download icon. Status code: {response.status_code}")
+            print(f"Fejl ved download af ikon. Statuskode: {response.status_code}")
     except Exception as e:
-        print("Error:", e)
+        print("Fejl:", e)
 
-# Example usage
+# Eksempel på brug
 def main():
-    icon_url = "https://example.com/icon.png" 
-    icon_filename = "icon.png" 
+    """
+    Eksempel på brug af save_icon-funktionen.
+    """
+    icon_url = "https://example.com/icon.png"  # URL'en for ikonet
+    icon_filename = "icon.png"  # Filnavn til det gemte ikon
     save_icon(icon_url, icon_filename)
 
 if __name__ == "__main__":
     main()
-
