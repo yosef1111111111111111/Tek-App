@@ -1,14 +1,24 @@
 from flask import Flask, redirect, url_for, render_template
 
+# Opretter en Flask-app
 app = Flask(__name__)
+
+# Definerer ruter og tilhørende funktioner
 
 @app.route('/')
 def index():
+    """
+    Viser indexsiden ved at rendere 'index.html' skabelonen.
+    """
     return render_template('index.html')
 
 @app.route('/next_page')
 def next_page():
+    """
+    Viser næste side ved at rendere 'next_page.html' skabelonen.
+    """
     return render_template('next_page.html')
 
+# Kører Flask-appen, hvis denne fil køres som hovedprogram
 if __name__ == '__main__':
     app.run(debug=True)
