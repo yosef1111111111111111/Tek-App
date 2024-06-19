@@ -1,15 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <!-- Definerer dokumenttypen og sprog for HTML-filen -->
-    <meta charset="UTF-8"> <!-- Sætter tegnkodningen til UTF-8 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Angiver visningsindstillinger for enheder -->
-    <title>Index Page</title> <!-- Titlen på HTML-siden, der vises i browserens fane -->
-</head>
-<body>
-    <h1>Welcome to the Index Page!</h1> <!-- Overskrift på siden -->
-    <form action="{{ url_for('next_page') }}" method="get"> <!-- Formular til at sende brugeren til næste side -->
-        <button type="submit">Go to Next Page</button> <!-- Knappen, der udløser formularhandling for at navigere til næste side -->
-    </form>
-</body>
-</html>
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        automaticallyImplyLeading: false,
+        title: FFButtonWidget(
+          onPressed: () async {
+            context.pop();
+          },
+          text: 'Cancel',
+          options: FFButtonOptions(
+            width: 80,
+            height: 40,
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+            iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+            color: FlutterFlowTheme.of(context).white,
+            textStyle: FlutterFlowTheme.of(context).labelMedium.override(
+                  fontFamily: 'Inter',
+                  letterSpacing: 0,
+                ),
+            elevation: 0,
+            borderSide: BorderSide(
+              color: Colors.transparent,
+              width: 1,
+            ),
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 8, 16, 8),
+            child: FFButtonWidget(
+              onPressed: () {
+                print('Button pressed ...');
+              },
+              text: 'Send',
+              options: FFButtonOptions(
+                width: 70,
+                height: 32,
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                color: FlutterFlowTheme.of(context).primary,
+                textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                      fontFamily: 'Inter',
+                      color: Colors.white,
+                      letterSpacing: 0,
+                    ),
+                elevation: 2,
+                borderSide: BorderSide(
+                  color: Colors.transparent,
+                  width: 1,
+                ),
+              ),
+            ),
+          ),
+        ],
+        centerTitle: false,
+        elevation: 0,
